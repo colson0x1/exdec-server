@@ -47,3 +47,7 @@ router.get('/', (req, res) => {
     `);
     }
 });
+router.get('/logout', (req, res) => {
+    req.session = undefined;
+    res.redirect('/');
+});
