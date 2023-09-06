@@ -23,7 +23,7 @@ var LoginController = /** @class */ (function () {
         __metadata("design:returntype", void 0)
     ], LoginController.prototype, "getLogin", null);
     LoginController = __decorate([
-        controller('/')
+        controller('/auth')
     ], LoginController);
     return LoginController;
 }());
