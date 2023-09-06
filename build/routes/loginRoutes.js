@@ -62,3 +62,6 @@ router.get('/logout', (req, res) => {
 router.get('/protected', requireAuth, (req, res) => {
     res.send('Welcome to protected route, logged in user');
 });
+// Example Code
+class LoginController {
+}
