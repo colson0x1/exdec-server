@@ -1,20 +1,21 @@
 import 'reflect-metadata';
 import { Methods } from './Methods';
+import { MetadataKeys } from './MetadataKeys';
 
 function routeBinder(method: string) {
   return function (path: string) {
     return function (target: any, key: string, desc: PropertyDescriptor) {
-      Reflect.defineMetadata('path', path, target, key);
-      Reflect.defineMetadata('method', method, target, key);
+      Reflect.defineMetadata(MetadataKeys.Path, path, target, key);
+      Reflect.defineMetadata(MetadataKeys.Method, method, target, key);
     };
   };
 }
 
-export const all = routeBinder(Methods.all);
-export const get = routeBinder(Methods.get);
-export const post = routeBinder(Methods.post);
-export const put = routeBinder(Methods.put);
-export const del = routeBinder(Methods.del);
-export const patch = routeBinder(Methods.patch);
-export const options = routeBinder(Methods.options);
-export const head = routeBinder(Methods.head);
+export const all = routeBinder(Methods.All);
+export const get = routeBinder(Methods.Get);
+export const post = routeBinder(Methods.Post);
+export const put = routeBinder(Methods.Put);
+export const del = routeBinder(Methods.Del);
+export const patch = routeBinder(Methods.Patch);
+export const options = routeBinder(Methods.Options);
+export const head = routeBinder(Methods.Head);
