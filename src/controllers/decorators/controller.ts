@@ -8,7 +8,7 @@ export function controller(routePrefix: string) {
     const router = AppRouter.getInstance();
 
     /* 
-      tsconfig.json
+      @ tsconfig.json
       "target": "es5"
     */
     for (let key in target.prototype) {
@@ -23,14 +23,16 @@ export function controller(routePrefix: string) {
         target.prototype,
         key
       );
+      const middlewares =
+        Reflect.getMetadata(MetadataKeys.Middleware, target.prototype, key) || [];
 
       if (path) {
-        router[method](`${routePrefix}${path}`, routeHandler);
+        router[method](`${routePrefix}${path}`, ...middlewares, routeHandler);
       }
     }
 
     /* 
-      tsconfig.json
+      @ tsconfig.json
       "target": "es2016"
       NOTE: In ES2016, class methods are no longer enumerable
       Resolution for es2016
@@ -39,8 +41,10 @@ export function controller(routePrefix: string) {
         const routeHandler = target.prototype[key];
         const path = Reflect.getMetadata('path', target.prototype, key);
 
+        ...
+
         if (path) {
-          router.get(`${routePrefix}${path}`, routeHandler);
+          router.get(`${routePrefix}${path}`, ...middlewares, routeHandler);
         }
       });
     */
