@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { get, controller, use } from './decorators';
+import { get, controller, use, post, bodyValidator } from './decorators';
 
 /* 
 @ Testing use decorator for this middleware
@@ -27,5 +27,19 @@ class LoginController {
         <button>Submit</button>
       </form>
     `);
+  }
+
+  @post('/login')
+  @bodyValidator('email', 'password')
+  postLogin(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    if (email === 'cols@google.com' && password === 'cols') {
+      req.session = { loggedIn: true };
+
+      res.redirect('/');
+    } else {
+      res.send('Invalid email or password');
+    }
   }
 }
