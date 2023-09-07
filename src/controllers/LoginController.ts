@@ -11,6 +11,17 @@ function logger(req: Request, res: Response, next: NextFunction) {
 
 @controller('/auth')
 class LoginController {
+  /*
+  @ Example function that doesn't satisfy RouteHandlerDescriptor
+  @ The PropertyDescriptor value of this function should use RequestHandler
+    that takes Request & produce Response for it to qualify as a Route Handler
+
+  @get('/')
+  add(a: number, b: number): number {
+    return a + b;
+  }
+  */
+
   @get('/login')
   // @use(logger)
   getLogin(req: Request, res: Response): void {

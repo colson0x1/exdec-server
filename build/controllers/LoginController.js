@@ -20,6 +20,16 @@ function logger(req: Request, res: Response, next: NextFunction) {
 var LoginController = /** @class */ (function () {
     function LoginController() {
     }
+    /*
+    @ Example function that doesn't satisfy RouteHandlerDescriptor
+    @ The PropertyDescriptor value of this function should use RequestHandler
+      that takes Request & produce Response for it to qualify as a Route Handler
+  
+    @get('/')
+    add(a: number, b: number): number {
+      return a + b;
+    }
+    */
     // @use(logger)
     LoginController.prototype.getLogin = function (req, res) {
         res.send("\n      <form method=\"POST\">\n        <div>\n          <label>Email</label>\n          <input name=\"email\" />\n        </div>\n        <div>\n          <label>Password</label>\n          <input name=\"password\" type=\"password\" />\n        </div>\n        <button>Submit</button>\n      </form>\n    ");
