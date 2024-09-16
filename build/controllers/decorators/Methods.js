@@ -11,4 +11,4 @@ var Methods;
     Methods["Patch"] = "patch";
     Methods["Options"] = "options";
     Methods["Head"] = "head";
-})(Methods = exports.Methods || (exports.Methods = {}));
+})(Methods || (exports.Methods = Methods = {}));

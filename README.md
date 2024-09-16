@@ -1,12 +1,23 @@
-# Server - Express TypeScript Decorator Library
+# ExDec Server - Express TypeScript Decorator Library
 
-Welcome to the **Server - Express TypeScript Decorator Library**! This library empowers you to build robust Express applications with TypeScript while harnessing advanced concepts like decorators for route handlers and promoting a better app architecture. This library was written to enhances the developer experience elevating type safety.
+Welcome to the **ExDec Server - Express TypeScript Decorator Library**! This library empowers you to build robust Express applications with TypeScript while harnessing advanced concepts like decorators for route handlers and promoting a better app architecture. This library was written to enhances the developer experience elevating type safety.
 
 ![server - middleware listening request](https://i.imgur.com/1CQ7iGK.png)
 
+## Installation as a module through NPM
+
+```shell
+$ npm i exdec
+```
+
+```js
+// @ Uses
+import { controller, get, post, bodyValidator, use } from 'exdec';
+```
+
 ## Table of Contents
 
-- [Server - Express TypeScript Decorator Library](#server---express-typescript-decorator-library)
+- [ExDec Server - Express TypeScript Decorator Library](#server---express-typescript-decorator-library)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Installation](#installation)
@@ -37,7 +48,7 @@ Welcome to the **Server - Express TypeScript Decorator Library**! This library e
 - **Middleware Support**: Attach middleware to specific routes with the `@use()` decorator.
 - **Singleton Router**: Ensure a single instance of the Express router with the `AppRouter` singleton.
 
-## Installation
+## Installation through git repository
 
 To install this library, simply run:
 
@@ -54,7 +65,7 @@ npm install
   "compilerOptions": {
     "target": "es5",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": true
     // ...
   }
 }
@@ -183,29 +194,37 @@ class RootController {
 ## Screenshots
 
 ### server - middleware listening requests
+
 ![server - middleware listening requests](https://i.imgur.com/1CQ7iGK.png)
 
 ### server - login error
+
 ![server - login error](https://i.imgur.com/jVHd1tx.png)
 
 ![server - login error](https://i.imgur.com/hoTEiNq.png)
 
 ### server - protected route access forbidden
+
 ![server - protected route access forbidden](https://i.imgur.com/v39IvZh.png)
 
 ### server - login success
+
 ![server - login success](https://i.imgur.com/lqRVFTT.png)
 
 ![server - login success](https://i.imgur.com/m2LZy1k.png)
 
 ### server - access protected route after logged in
+
 ![server - access protected route after logged in](https://i.imgur.com/d2OIepS.png)
 
-### server - Invalid input property error 
+### server - Invalid input property error
+
 ![server - invalid input property error](https://i.imgur.com/T1B7bJH.png)
 
 ### server - successful login
+
 ![server - successful login](https://i.imgur.com/KMUwwVN.png)
 
 ### server - logout
+
 ![server - logout](https://i.imgur.com/BDOe5VR.png)
