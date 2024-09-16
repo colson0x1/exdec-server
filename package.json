@@ -1,19 +1,22 @@
 {
-  "name": "server",
+  "name": "exdec",
   "version": "1.0.0",
-  "description": "",
+  "description": "ExDec - TypeScript Express Decorator Library: Enhance Express applications with decorators for route handling and better architecture using TypeScript.",
   "main": "index.js",
+  "types": "./build/index.d.ts",
   "scripts": {
     "start:build": "tsc -w",
     "start:run": "nodemon build/index.js",
-    "start": "concurrently npm:start:*"
+    "start": "concurrently npm:start:*",
+    "clean": "del ./build/*",
+    "build": "npm run clean && tsc"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/colson0x1/server.git"
   },
-  "author": "Colson",
-  "license": "ISC",
+  "author": "COLSON",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/colson0x1/server/issues"
   },
@@ -28,5 +31,15 @@
     "express": "^4.18.2",
     "nodemon": "^3.0.1",
     "reflect-metadata": "^0.1.13"
+  },
+  "keywords": [
+    "express decorator",
+    "express typescript decorator",
+    "typescript express decorator",
+    "server decorator",
+    "express server decorator"
+  ],
+  "devDependencies": {
+    "del-cli": "^5.1.0"
   }
 }
