@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/colson0x1/server.git"
+    "url": "git+https://github.com/colson0x1/exdec-server.git"
   },
   "author": "COLSON",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/colson0x1/server/issues"
+    "url": "https://github.com/colson0x1/exdec-server/issues"
   },
-  "homepage": "https://github.com/colson0x1/server#readme",
+  "homepage": "https://github.com/colson0x1/exdec-server#readme",
   "dependencies": {
     "@types/body-parser": "^1.19.2",
     "@types/cookie-session": "^2.0.44",
