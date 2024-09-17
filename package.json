@@ -1,6 +1,6 @@
 {
   "name": "exdec",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ExDec - TypeScript Express Decorator Library: Enhance Express applications with decorators for route handling and better architecture using TypeScript.",
   "main": "index.js",
   "types": "./build/index.d.ts",
@@ -33,6 +33,8 @@
     "reflect-metadata": "^0.1.13"
   },
   "keywords": [
+    "exdec",
+    "exdec server",
     "express decorator",
     "express typescript decorator",
     "typescript express decorator",
