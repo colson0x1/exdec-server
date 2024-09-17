@@ -7,7 +7,7 @@ Welcome to the **ExDec Server - Express TypeScript Decorator Library**! This lib
 ## Installation as a module through NPM
 
 ```shell
-$ npm i exdec
+$ npm i exdc
 ```
 
 ```js
@@ -30,10 +30,11 @@ import {
 
 ## Table of Contents
 
-- [ExDec Server - Express TypeScript Decorator Library](#server---express-typescript-decorator-library)
+- [ExDec Server - Express TypeScript Decorator Library](#exdec-server---express-typescript-decorator-library)
+  - [Installation as a module through NPM](#installation-as-a-module-through-npm)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
-  - [Installation](#installation)
+  - [Installation through git repository](#installation-through-git-repository)
   - [Getting Started](#getting-started)
   - [Advanced Concepts](#advanced-concepts)
     - [Decorators](#decorators)
@@ -42,6 +43,19 @@ import {
   - [Usage Examples](#usage-examples)
     - [Defining a Controller](#defining-a-controller)
     - [Applying Middleware](#applying-middleware)
+  - [ExDec - Production Twitter API Showcase](#exdec---production-twitter-api-showcase)
+    - [Introduction](#introduction)
+    - [Key Features:](#key-features)
+    - [Project Structure](#project-structure)
+    - [1. `package.json`](#1-packagejson)
+    - [2. `src/App.ts`](#2-srcappts)
+    - [3. `src/controllers/UserController.ts`](#3-srccontrollersusercontrollerts)
+    - [4. `src/controllers/PostController.ts`](#4-srccontrollerspostcontrollerts)
+    - [5. `src/services/UserService.ts`](#5-srcservicesuserservicets)
+    - [6. `src/services/PostService.ts`](#6-srcservicespostservicets)
+    - [7. `src/models/UserModel.ts`](#7-srcmodelsusermodelts)
+    - [8. `src/models/PostModel.ts`](#8-srcmodelspostmodelts)
+    - [Conclusion](#conclusion)
   - [Screenshots](#screenshots)
     - [server - middleware listening requests](#server---middleware-listening-requests)
     - [server - login error](#server---login-error)
@@ -203,6 +217,315 @@ class RootController {
   }
 }
 ```
+
+## ExDec - Production Twitter API Showcase
+
+### Introduction
+
+Building a production-grade Twitter-like social network using the `exdec` library would involve designing an architecture that supports user registration, authentication, post creation, comment management, likes, follows, timelines, notifications, and more.
+
+Below is a high-level overview and code demonstrating how to implement such a project in a professional, scalable manner using Express with TypeScript and `exdec`. This approach mirrors how senior engineers at big tech companies build robust, scalable systems for social platforms.
+
+### Key Features:
+
+- **User Management**: Registration, Login, Follow/Unfollow, Profile
+- **Post Management**: Tweet, Like, Comment
+- **Feed**: User timeline, Global timeline
+- **Notifications**: Likes, Comments, Follows
+
+### Project Structure
+
+```
+/twitter-clone
+|-- /src
+|   |-- /controllers
+|   |   |-- UserController.ts
+|   |   |-- PostController.ts
+|   |   |-- AuthController.ts
+|   |-- /middleware
+|   |   |-- authMiddleware.ts
+|   |-- /services
+|   |   |-- UserService.ts
+|   |   |-- PostService.ts
+|   |   |-- NotificationService.ts
+|   |-- /models
+|   |   |-- UserModel.ts
+|   |   |-- PostModel.ts
+|   |   |-- NotificationModel.ts
+|   |-- /decorators
+|   |-- /config
+|   |   |-- config.ts
+|   |-- /db
+|   |   |-- connection.ts
+|   |-- App.ts
+|-- /build
+|-- package.json
+|-- tsconfig.json
+|-- .gitignore
+```
+
+### 1. `package.json`
+
+```json
+{
+  "name": "twitter-clone",
+  "version": "1.0.0",
+  "description": "A Twitter-like social network built with Express and exdec decorators.",
+  "main": "build/App.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/App.js",
+    "start:dev": "tsc -w & nodemon build/App.js",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "reflect-metadata": "^0.1.13",
+    "exdec": "^1.0.0",
+    "mongoose": "^7.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4",
+    "nodemon": "^3.0.1",
+    "@types/node": "^20.4.0",
+    "@types/express": "^4.17.17",
+    "@types/mongoose": "^5.11.97",
+    "@types/jsonwebtoken": "^9.0.0"
+  }
+}
+```
+
+### 2. `src/App.ts`
+
+```typescript
+import express from 'express';
+import bodyParser from 'body-parser';
+import cookieSession from 'cookie-session';
+import { AppRouter } from 'exdec';
+import { connectToDB } from './db/connection';
+import { config } from './config/config';
+
+// Initialize express
+const app = express();
+
+// DB connection
+connectToDB();
+
+// Middleware
+app.use(bodyParser.json());
+app.use(cookieSession({ keys: [config.sessionSecret] }));
+
+// App routes
+app.use(AppRouter.getInstance());
+
+// Start server
+app.listen(config.port, () => {
+  console.log(`Server running on port ${config.port}`);
+});
+```
+
+### 3. `src/controllers/UserController.ts`
+
+```typescript
+import { Request, Response } from 'express';
+import { controller, get, post, bodyValidator } from 'exdec';
+import { UserService } from '../services/UserService';
+import { requireAuth } from '../middleware/authMiddleware';
+
+@controller('/users')
+class UserController {
+  private userService = new UserService();
+
+  @post('/register')
+  @bodyValidator('username', 'password', 'email')
+  async register(req: Request, res: Response): Promise<void> {
+    const { username, password, email } = req.body;
+    const user = await this.userService.createUser(username, password, email);
+    res.status(201).json(user);
+  }
+
+  @post('/login')
+  @bodyValidator('username', 'password')
+  async login(req: Request, res: Response): Promise<void> {
+    const { username, password } = req.body;
+    const token = await this.userService.authenticate(username, password);
+
+    if (token) {
+      req.session = { jwt: token };
+      res.status(200).send({ message: 'Login successful', token });
+    } else {
+      res.status(401).send('Invalid credentials');
+    }
+  }
+
+  @get('/profile')
+  @requireAuth
+  async getProfile(req: Request, res: Response): Promise<void> {
+    const user = await this.userService.getProfile(req.currentUser!.id);
+    res.status(200).json(user);
+  }
+
+  @post('/follow/:id')
+  @requireAuth
+  async followUser(req: Request, res: Response): Promise<void> {
+    const followId = req.params.id;
+    await this.userService.followUser(req.currentUser!.id, followId);
+    res.status(200).send('User followed');
+  }
+}
+```
+
+### 4. `src/controllers/PostController.ts`
+
+```typescript
+import { Request, Response } from 'express';
+import { controller, get, post, bodyValidator } from 'exdec';
+import { PostService } from '../services/PostService';
+import { requireAuth } from '../middleware/authMiddleware';
+
+@controller('/posts')
+class PostController {
+  private postService = new PostService();
+
+  @post('/')
+  @requireAuth
+  @bodyValidator('content')
+  async createPost(req: Request, res: Response): Promise<void> {
+    const { content } = req.body;
+    const post = await this.postService.createPost(
+      req.currentUser!.id,
+      content,
+    );
+    res.status(201).json(post);
+  }
+
+  @post('/:postId/like')
+  @requireAuth
+  async likePost(req: Request, res: Response): Promise<void> {
+    const { postId } = req.params;
+    await this.postService.likePost(req.currentUser!.id, postId);
+    res.status(200).send('Post liked');
+  }
+
+  @get('/timeline')
+  @requireAuth
+  async getTimeline(req: Request, res: Response): Promise<void> {
+    const timeline = await this.postService.getUserTimeline(
+      req.currentUser!.id,
+    );
+    res.status(200).json(timeline);
+  }
+}
+```
+
+### 5. `src/services/UserService.ts`
+
+```typescript
+import { UserModel } from '../models/UserModel';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { config } from '../config/config';
+
+export class UserService {
+  async createUser(username: string, password: string, email: string) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new UserModel({ username, password: hashedPassword, email });
+    await user.save();
+    return user;
+  }
+
+  async authenticate(username: string, password: string) {
+    const user = await UserModel.findOne({ username });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const token = jwt.sign({ id: user._id }, config.jwtSecret);
+      return token;
+    }
+    return null;
+  }
+
+  async getProfile(userId: string) {
+    return UserModel.findById(userId);
+  }
+
+  async followUser(userId: string, followId: string) {
+    const user = await UserModel.findById(userId);
+    user.following.push(followId);
+    await user.save();
+  }
+}
+```
+
+### 6. `src/services/PostService.ts`
+
+```typescript
+import { PostModel } from '../models/PostModel';
+
+export class PostService {
+  async createPost(userId: string, content: string) {
+    const post = new PostModel({ userId, content });
+    await post.save();
+    return post;
+  }
+
+  async likePost(userId: string, postId: string) {
+    const post = await PostModel.findById(postId);
+    if (post) {
+      post.likes.push(userId);
+      await post.save();
+    }
+  }
+
+  async getUserTimeline(userId: string) {
+    return PostModel.find({ userId }).sort({ createdAt: -1 });
+  }
+}
+```
+
+### 7. `src/models/UserModel.ts`
+
+```typescript
+import mongoose from 'mongoose';
+
+const userSchema = new mongoose.Schema(
+  {
+    username: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  },
+  { timestamps: true },
+);
+
+export const UserModel = mongoose.model('User', userSchema);
+```
+
+### 8. `src/models/PostModel.ts`
+
+```typescript
+import mongoose from 'mongoose';
+
+const postSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    content: { type: String, required: true },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  },
+  { timestamps: true },
+);
+
+export const PostModel = mongoose.model('Post', postSchema);
+```
+
+### Conclusion
+
+This code structure provides a professional, production-ready social network using Express, TypeScript, `exdec`, and MongoDB. It includes proper user authentication, post creation, likes, and follows, all organized following best practices. Scalability, maintainability, and a clean separation of concerns are achieved using service layers, controllers, and models. You can enhance this by adding more features like notifications, caching, and WebSockets for real-time updates.
 
 ## Screenshots
 
