@@ -1,6 +1,6 @@
 # ExDec Server - Express TypeScript Decorator Library
 
-Welcome to the **ExDec Server - Express TypeScript Decorator Library**! This library empowers you to build robust Express applications with TypeScript while harnessing advanced concepts like decorators for route handlers and promoting a better app architecture. This library was written to enhances the developer experience elevating type safety.
+**ExDec Server** is an engineering-driven toolkit crafted for building sophisticated Express applications with TypeScript. It harnesses the power of TypeScript decorators to deliver clean, modular route management, middleware handling, and scalable application architectures. Whether you're developing APIs, microservices, or complex web platforms, ExDec brings the rigor of type safety and the clarity of structured design to your codebase. It’s built to help engineers solve real-world problems with efficiency, maintainability, and scalability in mind—making it the ideal solution for teams focused on delivering high-performance, production-grade software.
 
 ![server - middleware listening request](https://i.imgur.com/1CQ7iGK.png)
 
