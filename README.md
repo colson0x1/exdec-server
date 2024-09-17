@@ -236,7 +236,7 @@ Below is a high-level overview and code demonstrating how to implement such a pr
 ### Project Structure
 
 ```
-/twitter-clone
+/exdec-twitter
 |-- /src
 |   |-- /controllers
 |   |   |-- UserController.ts
@@ -268,10 +268,12 @@ Below is a high-level overview and code demonstrating how to implement such a pr
 
 ```json
 {
-  "name": "twitter-clone",
+  "name": "exdec-twitter",
   "version": "1.0.0",
   "description": "A Twitter-like social network built with Express and exdec decorators.",
   "main": "build/App.js",
+  "author": "COLSON",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "start": "node build/App.js",
