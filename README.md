@@ -11,8 +11,21 @@ $ npm i exdec
 ```
 
 ```js
-// @ Uses
-import { controller, get, post, bodyValidator, use } from 'exdec';
+// @ ExDec
+import {
+  use,
+  controller,
+  AppRouter,
+  bodyValidator,
+  all,
+  get,
+  post,
+  put,
+  del,
+  patch,
+  options,
+  head,
+} from 'exdec';
 ```
 
 ## Table of Contents
