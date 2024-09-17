@@ -9,7 +9,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.use = void 0;
+exports.use = use;
 require("reflect-metadata");
 var MetadataKeys_1 = require("./MetadataKeys");
 function use(middleware) {
@@ -18,4 +18,3 @@ function use(middleware) {
         Reflect.defineMetadata(MetadataKeys_1.MetadataKeys.Middleware, __spreadArray(__spreadArray([], middlewares, true), [middleware], false), target, key);
     };
 }
-exports.use = use;

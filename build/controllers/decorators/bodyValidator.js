@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bodyValidator = void 0;
+exports.bodyValidator = bodyValidator;
 require("reflect-metadata");
 var MetadataKeys_1 = require("./MetadataKeys");
 function bodyValidator() {
@@ -12,4 +12,3 @@ function bodyValidator() {
         Reflect.defineMetadata(MetadataKeys_1.MetadataKeys.Validator, keys, target, key);
     };
 }
-exports.bodyValidator = bodyValidator;
