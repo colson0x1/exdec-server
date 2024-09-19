@@ -7,7 +7,7 @@
 ## Installation as a module through NPM
 
 ```shell
-$ npm i exdc
+$ npm i exdec
 ```
 
 ```js
@@ -30,7 +30,7 @@ import {
 
 ## Table of Contents
 
-- [ExDec Server - Express TypeScript Decorator Library](#exdec-server---express-typescript-decorator-library)
+- [ExDec Server (exdec npm)](#exdec-server-exdec-npm)
   - [Installation as a module through NPM](#installation-as-a-module-through-npm)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
@@ -43,7 +43,7 @@ import {
   - [Usage Examples](#usage-examples)
     - [Defining a Controller](#defining-a-controller)
     - [Applying Middleware](#applying-middleware)
-  - [ExDec - Production Twitter API Showcase](#exdec---production-twitter-api-showcase)
+  - [ExDec - Build Production API: Twitter Showcase](#exdec---build-production-api-twitter-showcase)
     - [Introduction](#introduction)
     - [Key Features:](#key-features)
     - [Project Structure](#project-structure)
@@ -218,7 +218,7 @@ class RootController {
 }
 ```
 
-## ExDec - Production Twitter API Showcase
+## ExDec - Build Production API: Twitter Showcase
 
 ### Introduction
 
