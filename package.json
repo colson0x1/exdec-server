@@ -1,6 +1,6 @@
 {
   "name": "exdec",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "ExDec Server - A TypeScript decorator library for modular and scalable Express applications, offering clean routing, middleware management, and enhanced type safety, with an architectural approach inspired by NestJS.",
   "main": "index.js",
   "types": "./build/index.d.ts",
